@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "quote": "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day.",
+        "name": "Awlad Hossin",
+        "role": "Senior Product Designer",
+        "avatar": "https://i.pravatar.cc/150?img=1"
+    },
+    {
+        "id": 2,
+        "quote": "This product significantly reduced my back pain after just a few weeks of consistent use. Highly recommended for desk workers.",
+        "name": "Nusrat Jahan",
+        "role": "UX Researcher",
+        "avatar": "https://i.pravatar.cc/150?img=2"
+    },
+    {
+        "id": 3,
+        "quote": "Comfortable, lightweight, and effective. I barely notice it while working long hours.",
+        "name": "Rafsan Rahman",
+        "role": "Frontend Developer",
+        "avatar": "https://i.pravatar.cc/150?img=3"
+    },
+    {
+        "id": 4,
+        "quote": "The design is minimal and practical. It helped me become more conscious about my posture.",
+        "name": "Tahsin Ahmed",
+        "role": "Product Manager",
+        "avatar": "https://i.pravatar.cc/150?img=4"
+    },
+    {
+        "id": 5,
+        "quote": "I’ve tried many posture solutions before, but this one actually works without discomfort.",
+        "name": "Sadia Karim",
+        "role": "Marketing Specialist",
+        "avatar": "https://i.pravatar.cc/150?img=5"
+    },
+    {
+        "id": 6,
+        "quote": "A simple yet powerful solution for anyone struggling with slouching and neck pain.",
+        "name": "Mehedi Hasan",
+        "role": "Fitness Trainer",
+        "avatar": "https://i.pravatar.cc/150?img=6"
+    },
+    {
+        "id": 7,
+        "quote": "Perfect for daily office use. The quality feels premium and durable.",
+        "name": "Farhan Chowdhury",
+        "role": "Operations Manager",
+        "avatar": "https://i.pravatar.cc/150?img=7"
+    },
+    {
+        "id": 8,
+        "quote": "After using this for a month, my posture has visibly improved. Worth every penny.",
+        "name": "Rima Akter",
+        "role": "Content Strategist",
+        "avatar": "https://i.pravatar.cc/150?img=8"
+    }
+]

@@ -25,6 +25,7 @@ const Brands = () => {
                 delay: 2500,
                 disableOnInteraction: false,
             }}
+            className='mt-12'
         >
             {
                 loopBrands.map((brand,index) => (
