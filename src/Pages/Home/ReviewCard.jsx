@@ -3,7 +3,7 @@ import quotation from '../../assets/reviewQuote.png'
 
 const ReviewCard = ({ review }) => {
   const { quote, name, role, avatar } = review;
-  console.log(quote)
+  // console.log(quote)
 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 max-w-md">
