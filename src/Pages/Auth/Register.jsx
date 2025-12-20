@@ -2,15 +2,36 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router';
+import axios from 'axios';
 
 const Register = () => {
-    const { registerUser,signInWithGoogle } = useAuth();
+    const { registerUser, signInWithGoogle, updateUserProfile } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleRegistration = (data) => {
         console.log(data)
+        const profileImg = data.photo[0];
+
         registerUser(data.email, data.password)
             .then(result => {
                 console.log(result)
+                const formData = new FormData();
+                formData.append('image',profileImg);
+                console.log(formData)
+                const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`;
+                axios.post(image_API_URL, formData)
+                .then(res => {
+                    console.log(res.data.data.url);
+                    const photoURL = res.data.data.url;
+                    const updateProfile = {
+                        displayName: data.name,
+                        photoURL: photoURL
+                    }
+                    updateUserProfile(updateProfile)
+                    .then(res => console.log(res))
+                    .catch(error => {
+                        console.log(error)
+                    })
+                })
             })
             .catch(error => {
                 console.log(error)
@@ -32,8 +53,17 @@ const Register = () => {
                 <p>Register with zapShift</p>
                 <fieldset className="fieldset">
                     <label className="label">Name</label>
-                    <input type="text" {...register('name')}
+                    <input type="text" {...register('name', {
+                        required: true
+                    })}
                         className="input" placeholder="Name" />
+                    {errors.name?.type === 'required' && <p className='text-red-700'>Name is required</p>}
+
+                    <label className="label">Photo</label>
+                    <input type="file" className="file-input" {...register('photo',{
+                        required: true
+                    })} />
+                    {errors.photo?.type === 'required' && <p className='text-red-700'>Photo is required</p>}
 
                     <label className="label">Email</label>
                     <input type="email" {...register('email', {
