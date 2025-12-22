@@ -1,12 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 
 const Register = () => {
     const { registerUser, signInWithGoogle, updateUserProfile } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log('from register',location)
     const handleRegistration = (data) => {
         console.log(data)
         const profileImg = data.photo[0];
@@ -27,7 +30,9 @@ const Register = () => {
                         photoURL: photoURL
                     }
                     updateUserProfile(updateProfile)
-                    .then(res => console.log(res))
+                    .then(() => {
+                        navigate(location.pathname || '/')
+                    })
                     .catch(error => {
                         console.log(error)
                     })
@@ -41,6 +46,7 @@ const Register = () => {
         signInWithGoogle()
             .then(result => {
                 console.log(result.user)
+                navigate(location.pathname || '/')
             })
             .catch(error => {
                 console.log(error)
@@ -80,7 +86,7 @@ const Register = () => {
                     {errors.password?.type === "required" && <p className='text-red-700'>Password is required</p>}
                     {errors.password?.type === "minLength" && <p className='text-red-700'>Password must contain at least 6 characters</p>}
                     {errors.password?.type === "pattern" && <p className='text-red-700'>Password must contain at least one upper case and one lower case</p>}
-                    <div><a className="link link-hover">Forgot password?</a></div>
+                    
                     <button className="btn  bg-primary mt-4">Register</button>
                 </fieldset>
             </form>
