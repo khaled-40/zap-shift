@@ -1,11 +1,28 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch, Watch } from 'react-hook-form';
+import { useLoaderData } from 'react-router';
 
 const SendParcel = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const serviceCenters = useLoaderData();
+    const regionsDuplicate = serviceCenters.map(c => c.region);
+    const regions = [...new Set(regionsDuplicate)];
+    const senderRegion = useWatch({ control, name: 'senderRegion' })
+    const recieverRegion = useWatch({ control, name: 'recieverRegion' })
+    // console.log(regions)
+    // console.log(serviceCenters)
     const handleSendParcel = (data) => {
         console.log(data)
+        const sameDistrict = data.senderDistrict == data.recieverDistrict;
+        console.log(sameDistrict)
     }
+    const districtByRegions = region => {
+        const filterServiceCenters = serviceCenters.filter(c => c.region === region);
+        const districts = filterServiceCenters.map(d => d.district);
+        return districts
+    }
+
+    // console.log(districtByRegions('Dhaka'))
     return (
         <div className='my-8'>
             <h2 className='text-5xl font-bold mb-5'>Send A Parcel</h2>
@@ -45,6 +62,28 @@ const SendParcel = () => {
                             <input type="text" className="input w-full" {...register('senderName')}
                                 placeholder="Sender Name" />
 
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Region</legend>
+                                <select {...register('senderRegion')} defaultValue="Pick a Region" className="select w-full">
+                                    <option disabled={true}>Pick a Region</option>
+                                    {
+                                        regions.map((r, i) => <option key={i} value={r}>{r}</option>)
+                                    }
+                                </select>
+                            </fieldset>
+
+
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">District</legend>
+                                <select {...register('senderDistrict')} defaultValue="Pick a District" className="select w-full">
+                                    <option disabled={true}>Pick a District</option>
+                                    {
+                                        districtByRegions(senderRegion).map((r, i) => <option key={i} value={r}>{r}</option>)
+                                    }
+                                </select>
+                                <span className="label">Optional</span>
+                            </fieldset>
+
                             <label className="label">Address</label>
                             <input type="text" className="input w-full" {...register('senderAddress')}
                                 placeholder="Sender Address" />
@@ -53,9 +92,6 @@ const SendParcel = () => {
                             <input type="number" className="input w-full" {...register('senderPhone')}
                                 placeholder="Your Phone No" />
 
-                            <label className="label">District</label>
-                            <input type="text" className="input w-full" {...register('senderDistrict')}
-                                placeholder="Your District" />
 
                             <label className="label">Pick Up Instruction</label>
                             <textarea className="textarea textarea-bordered w-full" {...register('pickUpInstruction')} placeholder='Pick Up Instruction'></textarea>
@@ -70,6 +106,28 @@ const SendParcel = () => {
                             <input type="text" className="input w-full" {...register('recieverName')}
                                 placeholder="Sender Name" />
 
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Regions</legend>
+                                <select {...register('recieverRegion')} defaultValue="Pick a Region" className="select w-full">
+                                    <option disabled={true}>Pick a Region</option>
+                                    {
+                                        regions.map((r, i) => <option key={i} value={r}>{r}</option>)
+                                    }
+                                </select>
+                            </fieldset>
+
+
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Districts</legend>
+                                <select {...register('recieverDistrict')} defaultValue="Pick a District" className="select w-full">
+                                    <option disabled={true}>Pick a District</option>
+                                    {
+                                        districtByRegions(recieverRegion).map((r, i) => <option key={i} value={r}>{r}</option>)
+                                    }
+                                </select>
+                                <span className="label">Optional</span>
+                            </fieldset>
+
                             <label className="label">Reciever Address</label>
                             <input type="text" className="input w-full" {...register('recieverAddress')}
                                 placeholder="Sender Address" />
@@ -78,9 +136,6 @@ const SendParcel = () => {
                             <input type="number" className="input w-full" {...register('recieverPhone')}
                                 placeholder="Your Phone No" />
 
-                            <label className="label">Reciever District</label>
-                            <input type="text" className="input w-full" {...register('recieverDistrict')}
-                                placeholder="Your District" />
 
                             <label className="label">Delivery Instruction</label>
                             <textarea className="textarea textarea-bordered w-full" {...register('delilveryInstruction')} placeholder='Delivery Instruction'></textarea>
