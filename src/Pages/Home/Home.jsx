@@ -5,7 +5,7 @@ import Reviews from './Reviews';
 
 const reviewPromise = fetch('/reviews.json').then(res => res.json());
 const Home = () => {
-    console.log(reviewPromise)
+    // console.log(reviewPromise)
     return (
         <div>
            <Banner></Banner>

@@ -1,9 +1,19 @@
 import React from 'react';
 import { useForm, useWatch, Watch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
 
 const SendParcel = () => {
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const { register,
+         handleSubmit,
+          control, 
+        // formState: { errors } 
+    } = useForm();
+    const axiosSecure = useAxiosSecure();
+    const {user} = useAuth();
+    // console.log(user?.email)
     const serviceCenters = useLoaderData();
     const regionsDuplicate = serviceCenters.map(c => c.region);
     const regions = [...new Set(regionsDuplicate)];
@@ -13,8 +23,47 @@ const SendParcel = () => {
     // console.log(serviceCenters)
     const handleSendParcel = (data) => {
         console.log(data)
-        const sameDistrict = data.senderDistrict == data.recieverDistrict;
-        console.log(sameDistrict)
+        const isDocumentType = data.parcelType === 'document';
+        const isSameDistrict = data.senderDistrict == data.recieverDistrict;
+        console.log(isSameDistrict, isDocumentType)
+        const parcelWeight = parseFloat(data.parcelWeight);
+        let cost = 0;
+        if (isDocumentType) {
+            cost = isSameDistrict ? 60 : 80;
+        }
+        else {
+            if (parcelWeight < 3) {
+                cost = isSameDistrict ? 110 : 150;
+            }
+            else {
+                const extraWeight = data.parcelWeight - 3;
+                cost = isSameDistrict ? extraWeight * 40 + 110 : extraWeight * 40 + 150 + 40;
+            }
+        }
+        Swal.fire({
+            title: "Do You Agree With Our Pricing",
+            text: `You have to pay BDT ${cost}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, I agree"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.post('/parcels', data)
+                .then(res => {
+                    console.log(res.data);
+                })
+                
+
+                Swal.fire({
+                    title: "Success",
+                    text: "Your parcel has been taken successfully",
+                    icon: "success"
+                });
+            }
+        });
     }
     const districtByRegions = region => {
         const filterServiceCenters = serviceCenters.filter(c => c.region === region);
@@ -60,7 +109,12 @@ const SendParcel = () => {
                         <fieldset className="fieldset">
                             <label className="label">Sender Name</label>
                             <input type="text" className="input w-full" {...register('senderName')}
-                                placeholder="Sender Name" />
+                               defaultValue={user?.displayName}  readOnly/>
+
+
+                            <label className="label">Sender Email</label>
+                            <input type="text" className="input w-full" {...register('senderEmail')}
+                               defaultValue={user?.email} readOnly/>
 
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Region</legend>

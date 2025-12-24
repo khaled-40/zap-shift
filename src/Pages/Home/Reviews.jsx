@@ -5,7 +5,7 @@ import ReviewCard from './ReviewCard';
 
 const Reviews = ({ reviewPromise }) => {
     const reviews = use(reviewPromise);
-    console.log(reviews)
+    // console.log(reviews)
     return (
         <Swiper
             loop={true}
