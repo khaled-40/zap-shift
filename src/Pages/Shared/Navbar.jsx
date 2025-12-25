@@ -7,6 +7,9 @@ const Navbar = () => {
     const {user,logOut} = useAuth();
     const links = <>
     <li><NavLink>Services</NavLink></li>
+    {
+        user && <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+    }
     <li><NavLink to={'/send-parcel'}>Send Parcel</NavLink></li>
     <li><NavLink to={'/coverage'}>Coverage</NavLink></li>
     

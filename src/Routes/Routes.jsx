@@ -8,6 +8,8 @@ import Register from "../Pages/Auth/Register";
 import BeARider from "../Pages/BeARider/BeARider";
 import PrivateRoute from "./PrivateRoute";
 import SendParcel from "../Pages/SendParcel/SendParcel";
+import DashboardLayout from "../Layout/DashboardLayout";
+import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
 
 
 export const router = createBrowserRouter([
@@ -20,16 +22,16 @@ export const router = createBrowserRouter([
         Component: Home
       },
       {
-        path: '/coverage',
+        path: 'coverage',
         loader: () => fetch('/warehouses.json').then(res => res.json()),
         Component: Coverage
       },
       {
-        path: '/beARider',
+        path: 'beARider',
         element: <PrivateRoute><BeARider></BeARider></PrivateRoute>
       },
       {
-        path: '/send-parcel',
+        path: 'send-parcel',
         loader: () => fetch('/warehouses.json').then(res => res.json()),
         element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>
       }
@@ -46,6 +48,16 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         Component: Register
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    children: [
+      {
+        path: 'my-parcels',
+        Component: MyParcels
       }
     ]
   }
