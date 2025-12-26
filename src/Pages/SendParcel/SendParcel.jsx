@@ -40,6 +40,8 @@ const SendParcel = () => {
                 cost = isSameDistrict ? extraWeight * 40 + 110 : extraWeight * 40 + 150 + 40;
             }
         }
+        data.cost = cost;
+        // data.createdAt = new Date();
         Swal.fire({
             title: "Do You Agree With Our Pricing",
             text: `You have to pay BDT ${cost}`,
@@ -59,7 +61,7 @@ const SendParcel = () => {
 
                 Swal.fire({
                     title: "Success",
-                    text: "Your parcel has been taken successfully",
+                    text: "Your parcel request has been taken successfully",
                     icon: "success"
                 });
             }
