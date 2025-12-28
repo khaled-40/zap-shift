@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Link } from 'react-router';
 
 const MyParcels = () => {
+    const [checkoutUrl, setCheckoutUrl] = useState(null);
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const { data: parcels = [], refetch } = useQuery({
@@ -47,6 +48,26 @@ const MyParcels = () => {
             }
         });
     }
+
+    const handlePayment = async (parcel) => {
+        const paymentInfo = {
+            cost: parcel.cost,
+            parcelId: parcel._id,
+            senderEmail: parcel.senderEmail,
+            parcelName: parcel.parcelName
+        };
+        const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+        console.log(res.data);
+        setCheckoutUrl(res.data.url);
+    }
+
+    useEffect(() => {
+        refetch();
+        if (checkoutUrl) {
+            window.location.assign(checkoutUrl);
+        }
+    }, [checkoutUrl,refetch]);
+
     return (
         <div>
             <h2>This is my parcels{parcels.length}</h2>
@@ -71,12 +92,13 @@ const MyParcels = () => {
                                 <td>{parcel.cost}</td>
                                 <td>
                                     {
-                                        parcel.paymentStatus === 'paid'?
-                                        <span className='badge badge-success'>Paid</span>
-                                        :
-                                        <Link to={`/dashboard/payment/${parcel._id}`}>
-                                        <button className='btn btn-sm bg-primary text-black'>Pay</button>
-                                        </Link>
+                                        parcel.paymentStatus === 'paid' ?
+                                            <span className='badge badge-success text-white'>Paid</span>
+                                            :
+
+                                            <button onClick={() => handlePayment(parcel)}
+                                                className='btn btn-sm bg-primary text-black'>Pay</button>
+
                                     }
                                 </td>
                                 <td>Blue</td>

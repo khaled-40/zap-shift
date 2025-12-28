@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, useWatch, Watch } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
@@ -13,6 +13,7 @@ const SendParcel = () => {
     } = useForm();
     const axiosSecure = useAxiosSecure();
     const {user} = useAuth();
+    const navigate = useNavigate();
     // console.log(user?.email)
     const serviceCenters = useLoaderData();
     const regionsDuplicate = serviceCenters.map(c => c.region);
@@ -49,7 +50,7 @@ const SendParcel = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, I agree"
+            confirmButtonText: "Confirm and Continue Payment"
         }).then((result) => {
             if (result.isConfirmed) {
 
@@ -57,7 +58,7 @@ const SendParcel = () => {
                 .then(res => {
                     console.log(res.data);
                 })
-                
+                navigate('/dashboard/my-parcels')
 
                 Swal.fire({
                     title: "Success",
