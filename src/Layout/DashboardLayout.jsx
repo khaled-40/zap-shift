@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import { IoDocument } from "react-icons/io5";
+import { FaRegCreditCard } from 'react-icons/fa';
 
 const DashboardLayout = () => {
     return (
@@ -17,7 +18,7 @@ const DashboardLayout = () => {
                 </nav>
                 {/* Page content here */}
                 <Outlet></Outlet>
-                
+
             </div>
 
             <div className="drawer-side is-drawer-close:overflow-visible">
@@ -34,10 +35,22 @@ const DashboardLayout = () => {
                             </Link>
                         </li>
 
+                    
+
                         <li>
-                            <Link  to={'/dashboard/my-parcels'}>
-                            <IoDocument />
-                            <span className='is-drawer-close:hidden'>My Parcels</span></Link>
+                            <Link to={'/dashboard/my-parcels'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Parcels">
+                                {/* Settings icon */}
+                                <IoDocument />
+                                <span className="is-drawer-close:hidden">Settings</span>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/dashboard/my-payments'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payments">
+                                {/* Settings icon */}
+                                <FaRegCreditCard />
+                                <span className="is-drawer-close:hidden">Payments</span>
+                            </Link>
                         </li>
 
                         {/* List item */}
