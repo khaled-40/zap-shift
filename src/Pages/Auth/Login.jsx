@@ -2,9 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Login = () => {
-    const { signInUser,signInWithGoogle } = useAuth();
+    const { signInUser, signInWithGoogle } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
@@ -22,13 +24,25 @@ const Login = () => {
     }
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-        .then(result => {
-            console.log(result.user)
-            navigate(location?.state || '/')
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .then(result => {
+                console.log(result.user)
+                const userInfo = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    photoURL: result.user.photoURL
+                }
+                axiosSecure.post('/user', userInfo)
+                    .then(res => {
+                        console.log(res)
+                        if (res.data.insertedId) {
+                            console.log('user created successfully')
+                        }
+                    })
+                navigate(location?.state || '/')
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
     return (
         <div>

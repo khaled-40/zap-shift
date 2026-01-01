@@ -10,11 +10,13 @@ import { Link } from 'react-router';
 const MyParcels = () => {
     const [checkoutUrl, setCheckoutUrl] = useState(null);
     const { user } = useAuth();
+    // console.log(user.email)
     const axiosSecure = useAxiosSecure();
     const { data: parcels = [], refetch } = useQuery({
         queryKey: ['myParcels', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
+            console.log(res.data)
             return res.data;
         }
     })
