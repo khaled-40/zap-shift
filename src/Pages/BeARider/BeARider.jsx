@@ -33,9 +33,12 @@ const BeARider = () => {
                 console.log(res.data);
                 if (res.data.insertedId) {
                     Swal.fire({
-                        title: "Success",
-                        text: "Your application has been taken successfully",
-                        icon: "success"
+                        position: "center",
+                        icon: "success",
+                        title: `Your application has been sent to check.
+                         We will reach you in 30 days`,
+                        showConfirmButton: false,
+                        timer: 2000
                     });
                 }
             })

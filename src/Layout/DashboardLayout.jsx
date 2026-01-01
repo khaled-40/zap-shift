@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import { IoDocument } from "react-icons/io5";
-import { FaRegCreditCard } from 'react-icons/fa';
+import { FaMotorcycle, FaRegCreditCard } from 'react-icons/fa';
 
 const DashboardLayout = () => {
     return (
@@ -50,6 +50,14 @@ const DashboardLayout = () => {
                                 {/* Settings icon */}
                                 <FaRegCreditCard />
                                 <span className="is-drawer-close:hidden">Payments</span>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/dashboard/approve-riders'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders">
+                                {/* Settings icon */}
+                                <FaMotorcycle />
+                                <span className="is-drawer-close:hidden">Approve Riders</span>
                             </Link>
                         </li>
 
