@@ -1,10 +1,12 @@
 import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import { FaUserMinus, FaUserShield } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();
-    const { data: users = [] } = useQuery({
+    const {refetch, data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/user`);
@@ -12,6 +14,41 @@ const ManageUsers = () => {
 
         }
     })
+
+    const handleMakeAdmin = user => {
+        const userRole = { role: 'admin' };
+        axiosSecure.patch(`/user/${user._id}`, userRole)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `${user.name} has been given the authority of admin`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+
+    const handleRemoveAdmin = user => {
+        const userRole = { role: 'user' };
+        axiosSecure.patch(`/user/${user._id}`, userRole)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `${user.name} has been removed from the authority of admin`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+
     return (
         <div>
             <h2 className='text-5xl font-bold'>Manage Users: {users.length}</h2>
@@ -21,14 +58,13 @@ const ManageUsers = () => {
                     <thead>
                         <tr>
                             <th>
-                                <label>
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
+                                SL NO
                             </th>
                             <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                            <th></th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Admin Actions</th>
+                            <th>Other Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,11 +90,29 @@ const ManageUsers = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    Zemlak, Daniel and Leannon
-                                    <br />
-                                    <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                                    {user.email}
                                 </td>
-                                <td>Purple</td>
+                                <td>
+                                    {user.role}
+                                </td>
+                                <td>
+                                    {
+                                        user.role === 'admin' ?
+                                            <button 
+                                            onClick={()  => handleRemoveAdmin(user)}
+                                            className='btn bg-red-300'>
+                                                <FaUserMinus />
+                                            </button> :
+                                            <button
+                                            onClick={()  => handleMakeAdmin(user)}
+                                            className='btn bg-green-400'>
+                                                <FaUserShield />
+                                            </button>
+
+                                    }
+
+
+                                </td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs">details</button>
                                 </th>
