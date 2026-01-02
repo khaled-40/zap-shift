@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import { IoDocument } from "react-icons/io5";
-import { FaMotorcycle, FaRegCreditCard } from 'react-icons/fa';
+import { FaMotorcycle, FaRegCreditCard, FaUsers } from 'react-icons/fa';
 
 const DashboardLayout = () => {
     return (
@@ -58,6 +58,15 @@ const DashboardLayout = () => {
                                 {/* Settings icon */}
                                 <FaMotorcycle />
                                 <span className="is-drawer-close:hidden">Approve Riders</span>
+                            </Link>
+                        </li>
+
+
+                        <li>
+                            <Link to={'/dashboard/manage-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Users">
+                                {/* Settings icon */}
+                                <FaUsers />
+                                <span className="is-drawer-close:hidden">Manage Users</span>
                             </Link>
                         </li>
 

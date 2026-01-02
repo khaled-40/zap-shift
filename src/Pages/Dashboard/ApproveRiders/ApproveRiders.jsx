@@ -1,9 +1,10 @@
 import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { FaRegTrashAlt, FaUserCheck } from 'react-icons/fa';
+import { FaEye, FaRegTrashAlt, FaUserCheck } from 'react-icons/fa';
 import { IoPersonRemove } from 'react-icons/io5';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router';
 
 const ApproveRiders = () => {
     const axiosSecure = useAxiosSecure();
@@ -15,7 +16,7 @@ const ApproveRiders = () => {
         }
     })
 
-    const handleApprove = (id, status,email) => {
+    const handleApprove = (id, status, email) => {
         console.log(email)
         console.log(id, status);
         const updateInfo = { status: status, email };
@@ -58,9 +59,15 @@ const ApproveRiders = () => {
                                 <td>{rider.riderEmail}</td>
                                 <td>{rider.riderDistrict}</td>
                                 <td className={`${rider.status === 'approved' ? 'badge badge-success  text-white'
-                                    : rider.status === 'rejected'?'badge badge-error  text-white':' text-black'} py-auto`}>{rider.status}</td>
+                                    : rider.status === 'rejected' ? 'badge badge-error  text-white' : ' text-black'} py-auto`}>{rider.status}</td>
                                 <td>
-                                    <button onClick={() => handleApprove(rider._id, 'approved',rider.riderEmail)} className='btn btn-sm'>
+                                    <Link to={`/dashboard/rider-details/${rider._id}`}>
+                                        <button className='btn btn-sm'>
+                                            <FaEye />
+                                        </button>
+                                    </Link>
+
+                                    <button onClick={() => handleApprove(rider._id, 'approved', rider.riderEmail)} className='btn btn-sm'>
                                         <FaUserCheck />
                                     </button>
                                     <button onClick={() => handleApprove(rider._id, 'rejected')} className='btn btn-sm mx-2'>
