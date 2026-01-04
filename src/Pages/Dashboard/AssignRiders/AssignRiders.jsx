@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 const AssignRiders = () => {
     const [selectedParcel, setSelectedParcel] = useState(null);
@@ -27,6 +28,29 @@ const AssignRiders = () => {
             return res.data;
         }
     })
+    const handleAssignRider = rider => {
+        const riderAssignInfo = {
+            riderId: rider._id,
+            riderEmail: rider.riderEmail,
+            riderName: rider.riderName,
+
+        };
+        axiosSecure.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
+            .then(res => {
+                console.log(res)
+                riderModalRef.current.close();
+                if (res.data.modifiedCount) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `This rider status has been ${status}`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+    
     return (
         <div>
             <h2 className='text-4xl font-bold'>Pending Pickup: {parcels.length}</h2>
@@ -87,7 +111,8 @@ const AssignRiders = () => {
                                         <td>{rider.riderName}</td>
                                         <td>{rider.riderEmail}</td>
                                         <td>
-                                            <button className='btn btn-primary text-black'>
+                                            <button onClick={() => handleAssignRider(rider)}
+                                                className='btn btn-primary text-black'>
                                                 Assign
                                             </button>
                                         </td>
