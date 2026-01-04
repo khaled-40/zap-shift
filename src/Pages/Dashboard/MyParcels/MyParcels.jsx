@@ -83,6 +83,7 @@ const MyParcels = () => {
                             <th>Cost</th>
                             <th>Payment</th>
                             <th>Delivery Status</th>
+                            <th>Tracking ID</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -103,7 +104,8 @@ const MyParcels = () => {
 
                                     }
                                 </td>
-                                <td>Blue</td>
+                                <td>{parcel?.deliveryStatus}</td>
+                                <td>{parcel?.trackingId}</td>
                                 <td>
                                     <button className='btn btn-sm hover:btn-primary text-black'>
                                         <FaEdit />

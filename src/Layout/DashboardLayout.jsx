@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router';
 import { IoDocument } from "react-icons/io5";
 import { FaMotorcycle, FaRegCreditCard, FaUsers } from 'react-icons/fa';
 import useRole from '../hooks/useRole';
+// import { RiEBikeFill } from "react-icons/ri";
 
 const DashboardLayout = () => {
     const { role } = useRole();
@@ -72,6 +73,14 @@ const DashboardLayout = () => {
                                         {/* Settings icon */}
                                         <FaUsers />
                                         <span className="is-drawer-close:hidden">Manage Users</span>
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to={'/dashboard/assign-riders'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign Riders">
+                                        {/* Settings icon */}
+                                        <FaUsers />
+                                        <span className="is-drawer-close:hidden">Assign Riders</span>
                                     </Link>
                                 </li>
                             </>

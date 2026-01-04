@@ -47,7 +47,8 @@ const ApproveRiders = () => {
                             <th>Name</th>
                             <th>Email</th>
                             <th>District</th>
-                            <th>Status</th>
+                            <th>Approval Status</th>
+                            <th>Rider Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -60,6 +61,7 @@ const ApproveRiders = () => {
                                 <td>{rider.riderDistrict}</td>
                                 <td className={`${rider.status === 'approved' ? 'badge badge-success  text-white'
                                     : rider.status === 'rejected' ? 'badge badge-error  text-white' : ' text-black'} py-auto`}>{rider.status}</td>
+                                <td>{rider.workStatus}</td>
                                 <td>
                                     <Link to={`/dashboard/rider-details/${rider._id}`}>
                                         <button className='btn btn-sm'>
