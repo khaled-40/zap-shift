@@ -19,6 +19,8 @@ import RiderDetails from "../Pages/Dashboard/ApproveRiders/RiderDetails";
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import AdminRoute from "./AdminRoute";
 import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
+import RiderRoute from "./RiderRoute";
+import AssignedTasks from "../Pages/Dashboard/AssignedTasks/AssignedTasks";
 
 
 export const router = createBrowserRouter([
@@ -84,6 +86,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-payments',
         Component: MyPayments
+      },
+      {
+        path: 'assigned-tasks',
+        element: <RiderRoute><AssignedTasks></AssignedTasks></RiderRoute>
       },
       {
         path: 'approve-riders',

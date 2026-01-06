@@ -7,7 +7,7 @@ const AssignRiders = () => {
     const [selectedParcel, setSelectedParcel] = useState(null);
     const axiosSecure = useAxiosSecure();
     const riderModalRef = useRef();
-    const { data: parcels = [] } = useQuery({
+    const {refetch, data: parcels = [] } = useQuery({
         queryKey: ['parcels', 'pending-pickup'],
         queryFn: async () => {
             const res = await axiosSecure.get('/parcels?deliveryStatus=pending-pickup');
@@ -16,7 +16,7 @@ const AssignRiders = () => {
     })
     const handleModalOpen = parcel => {
         setSelectedParcel(parcel);
-        console.log(selectedParcel.senderDistrict)
+        // console.log(selectedParcel.senderDistrict)
         riderModalRef.current.showModal();
     };
     const { data: riders = [] } = useQuery({
@@ -40,6 +40,7 @@ const AssignRiders = () => {
                 console.log(res)
                 riderModalRef.current.close();
                 if (res.data.modifiedCount) {
+                    refetch();
                     Swal.fire({
                         position: "top-end",
                         icon: "success",

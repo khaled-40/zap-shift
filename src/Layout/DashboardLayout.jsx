@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import { IoDocument } from "react-icons/io5";
-import { FaMotorcycle, FaRegCreditCard, FaUsers } from 'react-icons/fa';
+import { FaMotorcycle, FaRegCreditCard, FaTasks, FaUsers } from 'react-icons/fa';
 import useRole from '../hooks/useRole';
 // import { RiEBikeFill } from "react-icons/ri";
 
@@ -56,6 +56,21 @@ const DashboardLayout = () => {
                                 <span className="is-drawer-close:hidden">Payments</span>
                             </Link>
                         </li>
+                        {/* rider only routes */}
+
+                        {
+                            role.role === 'rider' && <>
+                                <li>
+                                    <Link to={'/dashboard/assigned-tasks'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assigned Tasks">
+                                        {/* Settings icon */}
+                                        <FaTasks />
+                                        <span className="is-drawer-close:hidden">Assigned Tasks</span>
+                                    </Link>
+                                </li>
+                            </>
+                        }
+
+                        {/* admin only routes */}
 
                         {
                             role.role === 'admin' && <>
