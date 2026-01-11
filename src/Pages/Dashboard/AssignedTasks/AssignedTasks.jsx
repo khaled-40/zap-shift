@@ -2,6 +2,7 @@ import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const AssignedTasks = () => {
     const { user } = useAuth();
@@ -14,6 +15,21 @@ const AssignedTasks = () => {
             return res.data;
         }
     })
+    const handleAcceptTask = parcel => {
+        const statusInfo = { deliveryStatus: 'in_transit' };
+        axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `Thank you for accepting`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
     console.log(parcels)
     return (
         <div>
@@ -31,17 +47,23 @@ const AssignedTasks = () => {
                     </thead>
                     <tbody>
                         {
-                            parcels.map((parcel, index) =><tr key={parcel._id}>
-                            <th>{index+1}</th>
-                            <td>{parcel.parcelName}</td>
-                            <td>
-                                <button className='btn btn-primary text-black'>Accept</button>
-                                <button className='btn btn-warning ml-2'>Reject</button>
-                            </td>
-                            <td>Blue</td>
-                        </tr>)
+                            parcels.map((parcel, index) => <tr key={parcel._id}>
+                                <th>{index + 1}</th>
+                                <td>{parcel.parcelName}</td>
+                                <td>
+                                    {
+                                        parcel.deliveryStatus === 'driver_assigned' ? <>
+                                            <button onClick={() => handleAcceptTask(parcel)} className='btn btn-primary text-black'>Accept</button>
+                                            <button className='btn btn-warning ml-2'>Reject</button>
+                                        </>:
+                                        <button className='badge badge-success'>Accepted</button>
+                                    }
+
+                                </td>
+                                <td>Blue</td>
+                            </tr>)
                         }
-                        
+
                     </tbody>
                 </table>
             </div>
