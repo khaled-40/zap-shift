@@ -16,7 +16,10 @@ const AssignedTasks = () => {
         }
     })
     const handleAcceptTask = parcel => {
-        const statusInfo = { deliveryStatus: 'in_transit' };
+        const statusInfo = {
+            deliveryStatus: 'in_transit',
+            riderId: parcel.riderId
+        };
         axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
@@ -32,8 +35,11 @@ const AssignedTasks = () => {
             })
     }
     const handleDeliveryStatusUpdate = (parcel, status) => {
-        const statusInfo = { deliveryStatus: status };
-        axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
+        const updateInfo = {
+            deliveryStatus: status,
+            riderId: parcel.riderId
+        };
+        axiosSecure.patch(`/parcels/${parcel._id}/status`, updateInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();

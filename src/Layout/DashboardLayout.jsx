@@ -3,6 +3,9 @@ import { Link, Outlet } from 'react-router';
 import { IoDocument } from "react-icons/io5";
 import { FaMotorcycle, FaRegCreditCard, FaTasks, FaUsers } from 'react-icons/fa';
 import useRole from '../hooks/useRole';
+import { SiGoogletasks } from "react-icons/si";
+import { MdAssignmentTurnedIn } from "react-icons/md";
+
 // import { RiEBikeFill } from "react-icons/ri";
 
 const DashboardLayout = () => {
@@ -67,6 +70,13 @@ const DashboardLayout = () => {
                                         <span className="is-drawer-close:hidden">Assigned Tasks</span>
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link to={'/dashboard/completed-deliveries'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Completed Deliveries">
+                                        {/* Settings icon */}
+                                        <SiGoogletasks />
+                                        <span className="is-drawer-close:hidden">Completed Deliveries</span>
+                                    </Link>
+                                </li>
                             </>
                         }
 
@@ -94,7 +104,7 @@ const DashboardLayout = () => {
                                 <li>
                                     <Link to={'/dashboard/assign-riders'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign Riders">
                                         {/* Settings icon */}
-                                        <FaUsers />
+                                        <MdAssignmentTurnedIn />
                                         <span className="is-drawer-close:hidden">Assign Riders</span>
                                     </Link>
                                 </li>

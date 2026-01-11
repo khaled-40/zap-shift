@@ -21,6 +21,7 @@ import AdminRoute from "./AdminRoute";
 import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
 import RiderRoute from "./RiderRoute";
 import AssignedTasks from "../Pages/Dashboard/AssignedTasks/AssignedTasks";
+import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 
 
 export const router = createBrowserRouter([
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: 'assigned-tasks',
         element: <RiderRoute><AssignedTasks></AssignedTasks></RiderRoute>
+      },
+      {
+        path: 'completed-deliveries',
+        element: <RiderRoute><CompletedDeliveries></CompletedDeliveries></RiderRoute>
       },
       {
         path: 'approve-riders',

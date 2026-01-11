@@ -60,7 +60,7 @@ const ApproveRiders = () => {
                                 <td>{rider.riderEmail}</td>
                                 <td>{rider.riderDistrict}</td>
                                 <td className={`${rider.status === 'approved' ? 'badge badge-success  text-white'
-                                    : rider.status === 'rejected' ? 'badge badge-error  text-white' : ' text-black'} py-auto`}>{rider.status}</td>
+                                    : rider.status === 'rejected' ? 'badge badge-error  text-white' : ' text-black'}`}>{rider.status}</td>
                                 <td>{rider.workStatus}</td>
                                 <td>
                                     <Link to={`/dashboard/rider-details/${rider._id}`}>
