@@ -105,7 +105,9 @@ const MyParcels = () => {
                                     }
                                 </td>
                                 <td>{parcel?.deliveryStatus}</td>
-                                <td>{parcel?.trackingId}</td>
+                                <td>
+                                    <Link to={`/track-parcel/${parcel?.trackingId}`} className='btn'>{parcel?.trackingId}</Link>
+                                </td>
                                 <td>
                                     <button className='btn btn-sm hover:btn-primary text-black'>
                                         <FaEdit />

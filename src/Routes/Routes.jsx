@@ -22,6 +22,7 @@ import AssignRiders from "../Pages/Dashboard/AssignRiders/AssignRiders";
 import RiderRoute from "./RiderRoute";
 import AssignedTasks from "../Pages/Dashboard/AssignedTasks/AssignedTasks";
 import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
+import TrackParcel from "../Pages/TrackParcel/TrackParcel";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
         path: 'coverage',
         loader: () => fetch('/warehouses.json').then(res => res.json()),
         Component: Coverage
+      },
+      {
+        path: 'track-parcel/:trackingId',
+        Component: TrackParcel
       },
       {
         path: 'beARider',

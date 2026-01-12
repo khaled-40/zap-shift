@@ -18,7 +18,8 @@ const AssignedTasks = () => {
     const handleAcceptTask = parcel => {
         const statusInfo = {
             deliveryStatus: 'in_transit',
-            riderId: parcel.riderId
+            riderId: parcel.riderId,
+            trackingId: parcel.trackingId
         };
         axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
             .then(res => {
@@ -37,7 +38,8 @@ const AssignedTasks = () => {
     const handleDeliveryStatusUpdate = (parcel, status) => {
         const updateInfo = {
             deliveryStatus: status,
-            riderId: parcel.riderId
+            riderId: parcel.riderId,
+            trackingId: parcel.trackingId
         };
         axiosSecure.patch(`/parcels/${parcel._id}/status`, updateInfo)
             .then(res => {

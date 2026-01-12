@@ -8,15 +8,15 @@ const AssignRiders = () => {
     const axiosSecure = useAxiosSecure();
     const riderModalRef = useRef();
     const {refetch, data: parcels = [] } = useQuery({
-        queryKey: ['parcels', 'pending-pickup'],
+        queryKey: ['parcels', 'pending_pickup'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/parcels?deliveryStatus=pending-pickup');
+            const res = await axiosSecure.get('/parcels?deliveryStatus=pending_pickup');
             return res.data;
         }
     })
     const handleModalOpen = parcel => {
         setSelectedParcel(parcel);
-        // console.log(selectedParcel.senderDistrict)
+        
         riderModalRef.current.showModal();
     };
     const { data: riders = [] } = useQuery({
@@ -24,15 +24,17 @@ const AssignRiders = () => {
         enabled: !!selectedParcel,
         queryFn: async () => {
             const res = await axiosSecure.get(`/riders?status=approved&district=${selectedParcel.senderDistrict}&workStatus=available`);
-            console.log(res.data)
+            // console.log(res.data)
             return res.data;
         }
     })
+    console.log(selectedParcel)
     const handleAssignRider = rider => {
         const riderAssignInfo = {
             riderId: rider._id,
             riderEmail: rider.riderEmail,
             riderName: rider.riderName,
+            trackingId: selectedParcel.trackingId
 
         };
         axiosSecure.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
@@ -80,7 +82,7 @@ const AssignRiders = () => {
                                     <button
                                         onClick={() => handleModalOpen(parcel)}
                                         className='btn btn-primary text-black'>
-                                        Assign Rider
+                                        Find Rider
                                     </button>
                                 </td>
                             </tr>)
