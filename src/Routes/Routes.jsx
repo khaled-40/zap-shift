@@ -23,6 +23,10 @@ import RiderRoute from "./RiderRoute";
 import AssignedTasks from "../Pages/Dashboard/AssignedTasks/AssignedTasks";
 import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import TrackParcel from "../Pages/TrackParcel/TrackParcel";
+import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
+import DashboardUserHome from "../Pages/Dashboard/DashboardHome/DashboardUserHome";
+import DashboardAdminHome from "../Pages/Dashboard/DashboardHome/DashboardAdminHome";
+import DashboardRiderHome from "../Pages/Dashboard/DashboardHome/DashboardRiderHome";
 
 
 export const router = createBrowserRouter([
@@ -74,8 +78,24 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [
       {
+        index: true,
+        Component: DashboardHome
+      },
+      {
         path: 'my-parcels',
         Component: MyParcels
+      },
+      {
+        path: 'user-dashboard-home',
+        Component: DashboardUserHome
+      },
+      {
+        path: 'admin-dashboard-home',
+        Component: DashboardAdminHome
+      },
+      {
+        path: 'rider-dashboard-home',
+        Component: DashboardRiderHome
       },
       {
         path: 'payment/:parcelId',
