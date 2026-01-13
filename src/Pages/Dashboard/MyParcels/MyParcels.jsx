@@ -56,8 +56,10 @@ const MyParcels = () => {
             cost: parcel.cost,
             parcelId: parcel._id,
             senderEmail: parcel.senderEmail,
-            parcelName: parcel.parcelName
+            parcelName: parcel.parcelName,
+            trackingId: parcel.trackingId
         };
+        console.log(parcels.trackingId)
         const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
         console.log(res.data);
         setCheckoutUrl(res.data.url);
@@ -70,6 +72,7 @@ const MyParcels = () => {
         }
     }, [checkoutUrl,refetch]);
 
+    
     return (
         <div>
             <h2>This is my parcels{parcels.length}</h2>
